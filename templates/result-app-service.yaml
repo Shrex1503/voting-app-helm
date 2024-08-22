@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-result-service
+  labels:
+    name: result-service
+    app: {{ .Values.appName }}
+spec:
+  type: NodePort
+  ports:
+  - name: "result-service"
+    port: 82
+    targetPort: 80
+    nodePort: 30002
+  selector:
+    app: {{ .Values.appName }}
+    name: result-app-pod

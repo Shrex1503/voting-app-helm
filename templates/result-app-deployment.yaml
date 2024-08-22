@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-result-app-deployment
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.resultApp.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+      name: result-app-pod
+  template:
+    metadata:
+      labels:
+        name: result-app-pod
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+      - name: result-app
+        image: {{ .Values.resultApp.image }}
+        ports:
+        - containerPort: 80
